@@ -10,6 +10,14 @@ body {
     height: 100vh; /* Ensures body spans the full viewport height */
 }
 
+/* Styling for "Arcane Kit" */
+#arcane-kit {
+    color: #0944d9; /* Bright blue for Arcane Kit */
+    font-size: 3.5rem; /* Slightly larger font size */
+    font-family: 'Love Light', cursive; /* Applying Love Light font */
+    margin-top: 20px;
+}
+
 /* Navigation bar styling */
 nav {
     text-align: center;
@@ -33,10 +41,6 @@ nav ul li a:hover {
 }
 
 /* Other styles */
-h1 {
-    font-size: 3rem;
-    margin: 20px;
-}
 p {
     font-size: 1.2rem;
     margin: 10px;
