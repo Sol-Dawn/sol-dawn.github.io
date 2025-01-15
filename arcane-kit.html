@@ -145,12 +145,101 @@
             margin: 5px 0 0 0;
         }
 
-        /* Additional styling removed for brevity (remains the same as original) */
+        /* Toggle Switches Container */
+        .toggles-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        /* Toggle Switch Styles */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            margin: 0 10px;
+            margin-bottom: 5px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toggle-label {
+            font-size: 16px;
+            color: var(--text-color);
+        }
+        
+        .feather {
+            width: 24px;   /* Control the size */
+            height: 24px;  /* Control the size */
+            stroke-width: 2;
+        }
+
+        /* Apply colors to fill property */
+        .feather-sun,
+        .feather-moon {
+            fill: none;
+            stroke-width: 2;
+        }
+
+        .feather-sun {
+            stroke: var(--sun-color);
+        }
+
+        .feather-moon {
+            stroke: var(--moon-color);
+            fill: var(--moon-color); /* Ensure the moon is fully purple in dark mode */
+        }
+
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>Arcane Kit 🧙‍♂️</h1> <!-- Updated Header -->
+        <h1>Arcane Kit 🧙‍♂️</h1>
         <!-- Collapse Toggle -->
         <div class="toggle-container">
             <span class="toggle-label">Collapse All</span>
@@ -165,10 +254,10 @@
          <div class="toggle-container">
             <svg class="feather feather-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
                 <g>
-                  <path d="M30.63,16.77l-4.29,3.51..."></path>
+                  <path d="M30.63,16.77l-4.29,3.51l0.55,5.52c0.03,0.3-0.07,0.59-0.28,0.81c-0.22,0.21-0.51,0.31-0.81,0.28l-5.52-0.55l-3.51,4.29C16.58,30.86,16.3,31,16,31s-0.58-0.14-0.77-0.37l-3.51-4.29L6.2,26.89c-0.3,0.03-0.59-0.07-0.81-0.28c-0.21-0.22-0.31-0.51-0.28-0.81l0.55-5.52l-4.29-3.51C1.14,16.58,1,16.3,1,16s0.14-0.58,0.37-0.77l4.29-3.51L5.11,6.2C5.08,5.9,5.18,5.61,5.39,5.39C5.61,5.18,5.9,5.07,6.2,5.11l5.52,0.55l3.51-4.29c0.37-0.47,1.17-0.47,1.54,0l3.51,4.29l5.52-0.55c0.3-0.04,0.59,0.07,0.81,0.28C26.82,5.61,26.92,5.9,26.89,6.2l-0.55,5.52l4.29,3.51C30.86,15.42,31,15.7,31,16S30.86,16.58,30.63,16.77z" />
                 </g>
                 <g>
-                  <path d="M23,16c0,3.86-3.14-"></path>
+                  <path d="M23,16c0,3.86-3.14,7-7,7s-7-3.14-7-7s3.14-7,7-7S23,12.14,23,16z" />
                 </g>
               </svg>
             <label class="switch">
@@ -176,19 +265,456 @@
                 <span class="slider"></span>
             </label>
             <svg class="feather feather-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M21 12.79A9 9 ..."></path>
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
               </svg>              
         </div>
     </div>
 
-    <!-- Tools Container -->
+    <!-- Tool Container -->
     <div class="tools-container">
-        <!-- All tool cards remain the same as your original, simply the header updated -->
+
+        <!-- Text Formatter Tool -->
+        <div class="tool-card">
+            <div class="tool-header">
+                <div>
+                    <h3>Text Formatter</h3>
+                    <p class="tool-description">Wraps text in quotes and ends with a coma (if more than 1)</p>
+                </div>
+                <span class="expand-icon">▼</span>
+            </div>
+            <div class="tool-content">
+                <textarea id="textInput" placeholder="Enter text separated by commas or new lines"></textarea>
+                <div class="button-group">
+                    <button onclick="formatText()">Format</button>
+                    <button class="copy-btn" onclick="copyText('textOutput')">Copy Result</button>
+                </div>
+                <textarea id="textOutput" readonly placeholder="Formatted result(s) will appear here"></textarea>
+            </div>
+        </div>
+
+        <!-- Defang/Refang Tool -->
+        <div class="tool-card">
+            <div class="tool-header">
+                <div>
+                    <h3>Defang and Fang</h3>
+                    <p class="tool-description">Defang or refang URL(s), IP(s), and Email(s)</p>
+                </div>
+                <span class="expand-icon">▼</span>
+            </div>
+            <div class="tool-content">
+                <textarea id="fangInput" placeholder="Enter URL(s), IP(s), or Email(s) seperated by commas or new lines"></textarea>
+                <div class="button-group">
+                    <button onclick="defang()">Defang</button>
+                    <button onclick="refang()">Refang</button>
+                    <button class="copy-btn" onclick="copyText('fangOutput')">Copy Result</button>
+                </div>
+                <textarea id="fangOutput" readonly placeholder="Defanged or refanged result(s) will appear here"></textarea>
+            </div>
+        </div>
+
+        <!-- VirusTotal and AbuseIPDB Search Tool -->
+        <div class="tool-card">
+            <div class="tool-header">
+                <div>
+                    <h3>Threat Intelligence Search</h3>
+                    <p class="tool-description">Search IPs/Domains on VirusTotal and AbuseIPDB</p>
+                    <p class="tool-description">Open buttons <b>ONLY</b> work <b>ONE</b> IP at a time</p>
+                </div>
+                <span class="expand-icon">▼</span>
+            </div>
+            <div class="tool-content">
+                <textarea id="threatInput" placeholder="Enter IP(s) or domain(s) (one per line)"></textarea>
+                <div class="button-group">
+                    <button onclick="searchThreatIntel()">Generate URLs</button>
+                    <button onclick="openVirusTotal()">Open VT</button>
+                    <button onclick="openAbuseIPDB()">Open AbuseIPDB</button>
+                    <button class="copy-btn" onclick="copyText('threatOutput')">Copy Result</button>
+                </div>
+                <textarea id="threatOutput" readonly placeholder="Generated search URL(s) will appear here"></textarea>
+            </div>
+        </div>
+
+        <!-- Safelink Decoder Tool -->
+        <div class="tool-card">
+            <div class="tool-header">
+                <div>
+                    <h3>Safelink Decoder</h3>
+                    <p class="tool-description">Decode Safelink and other obfuscated URLs</p>
+                    <p class="tool-description">EX: https://nam02.safelinks.protection.outlook.com/?url=...</p>
+                </div>
+                <span class="expand-icon">▼</span>
+            </div>
+            <div class="tool-content">
+                <textarea id="safelinkInput" placeholder="Enter Safelink URL(s) seperated by commas or new lines"></textarea>
+                <div class="button-group">
+                    <button onclick="decodeSafelinks()">Decode</button>
+                    <button class="copy-btn" onclick="copyText('safelinkOutput')">Copy Result</button>
+                </div>
+                <textarea id="safelinkOutput" readonly placeholder="Decoded URL(s) will appear here"></textarea>
+            </div>
+        </div>
+
+        <!-- QR Decoder Tool -->
+        <div class="tool-card">
+            <div class="tool-header">
+                <div>
+                    <h3>QR Decoder</h3>
+                    <p class="tool-description">Decode QR codes from an uploaded image or an image URL.</p>
+                </div>
+                <span class="expand-icon">▼</span>
+            </div>
+            <div class="tool-content">
+                 <!-- Image Upload Section - Updated styles -->
+                 <div style="margin-bottom: 15px; padding: 10px; border: 1px solid var(--border-color); border-radius: 5px; background-color: var(--card-bg); transition: background-color 0.3s ease, border-color 0.3s ease;">
+                    <label for="qrFileInput" style="font-weight: bold; display: block; margin-bottom: 5px; color: var(--text-color);">Upload an Image:</label>
+                    <input type="file" id="qrFileInput" accept="image/*" style="margin-bottom: 10px; color: var(--text-color);" />
+                    <button onclick="decodeQRFromFile()" style="margin-right: 10px;">Decode Uploaded Image</button>
+                </div>
+                <!-- URL Input Section - Updated styles -->
+                <div style="margin-bottom: 15px; padding: 10px; border: 1px solid var(--border-color); border-radius: 5px; background-color: var(--card-bg); transition: background-color 0.3s ease, border-color 0.3s ease;">
+                    <label for="qrImageUrl" style="font-weight: bold; display: block; margin-bottom: 5px; color: var(--text-color);">Paste an Image URL:</label>
+                    <input type="text" id="qrImageUrl" placeholder="Paste an image URL" 
+                           style="width: calc(100% - 22px); 
+                                  margin-bottom: 10px; 
+                                  padding: 8px; 
+                                  border: 1px solid var(--border-color); 
+                                  border-radius: 4px; 
+                                  background-color: var(--card-bg); 
+                                  color: var(--text-color);
+                                  transition: background-color 0.3s ease, border-color 0.3s ease;" />
+                    <button onclick="decodeQRFromUrl()" style="margin-right: 10px;">Decode from URL</button>
+                </div>
+                <textarea id="qrDecodedOutput" readonly placeholder="Decoded URL will appear here"></textarea>
+                <button onclick="resetQRDecoder()">Reset</button>
+                <button class="copy-btn" onclick="copyText('qrDecodedOutput')">Copy Result</button>
+            </div>
+        </div>
+        
+        <!-- WHOIS Search Tool -->
+        <div class="tool-card">
+            <div class="tool-header">
+                <div>
+                    <h3>WHOIS Search</h3>
+                    <p class="tool-description">Search URL or IP on WHOIS</p>
+                </div>
+                <span class="expand-icon">▼</span>
+            </div>
+            <div class="tool-content">
+                <textarea id="whoisInput" placeholder="Enter IP or domain"></textarea>
+                <div class="button-group">
+                    <button onclick="generateWhoisURL()">Generate URL</button>
+                    <button onclick="openWhois()">Open WHOIS</button>
+                    <button class="copy-btn" onclick="copyText('whoisOutput')">Copy Result</button>
+                </div>
+                <textarea id="whoisOutput" readonly placeholder="Generated whois URL will appear here"></textarea>
+            </div>
+        </div>
     </div>
     
     <footer style="margin-top: 40px; text-align: center; font-size: 14px; color: #666;">
-        <p>Made with love by using ChatGPT and Me.</p>
+        <p>Created with love by ChatGPT and I.</p>
         <p><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" title="">Report a bug</a> 🐛</p>
     </footer>
+    <script>
+        $(document).ready(function() {
+            // Initialize collapse state based on localStorage
+            const isCollapsed = localStorage.getItem('collapseAll') === 'true';
+            $('#toggleAll').prop('checked', !isCollapsed); // Inverse because checked means expanded
+            
+            if (isCollapsed) {
+                $('.tool-card').removeClass('expanded');
+                $('.tool-content').hide();
+                $('.expand-icon').css('transform', 'rotate(0deg)');
+            } else {
+                $('.tool-card').addClass('expanded');
+                $('.tool-content').show();
+                $('.expand-icon').css('transform', 'rotate(180deg)');
+            }
+            
+            // Initialize dark mode based on localStorage
+            if (localStorage.getItem('darkMode') === 'true') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                $('#darkModeToggle').prop('checked', true);
+            }
+        });
+
+        // Card Toggle Functionality
+        $('.tool-header').click(function(e) {
+            const toolCard = $(this).parent();
+            const toolContent = $(this).next('.tool-content');
+            const expandIcon = $(this).find('.expand-icon');
+            
+            toolCard.toggleClass('expanded');
+            toolContent.slideToggle();
+            
+            if (toolCard.hasClass('expanded')) {
+                expandIcon.css('transform', 'rotate(180deg)');
+            } else {
+                expandIcon.css('transform', 'rotate(0deg)');
+            }
+            
+            // Check if all cards are expanded or collapsed and update toggle accordingly
+            const allCards = $('.tool-card').length;
+            const expandedCards = $('.tool-card.expanded').length;
+            $('#toggleAll').prop('checked', expandedCards === allCards);
+            localStorage.setItem('collapseAll', expandedCards !== allCards);
+        });
+
+        // Expand/Collapse Toggle Functionality
+        $('#toggleAll').change(function() {
+            const isChecked = $(this).prop('checked');
+            const allToolCards = $('.tool-card');
+            const allExpandIcons = $('.expand-icon');
+            
+            if (isChecked) {
+                allToolCards.addClass('expanded');
+                $('.tool-content').slideDown();
+                allExpandIcons.css('transform', 'rotate(180deg)');
+            } else {
+                allToolCards.removeClass('expanded');
+                $('.tool-content').slideUp();
+                allExpandIcons.css('transform', 'rotate(0deg)');
+            }
+            
+            localStorage.setItem('collapseAll', !isChecked);
+        });
+
+        // Dark Mode Toggle Functionality
+        $('#darkModeToggle').change(function() {
+            if ($(this).is(':checked')) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('darkMode', 'true');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('darkMode', 'false');
+            }
+        });
+
+        function formatText() {
+            const input = document.getElementById('textInput').value;
+            // Split the text only by commas or new lines
+            const text = input.split(/[\n,]+/).filter(text => text.trim());
+            // Join back the words, wrapping each in quotes and joining with a comma
+            const formatted = text.map(text => `"${text.trim()}"`).join(', ');
+            document.getElementById('textOutput').value = formatted;
+        }
+
+        // New defang/refang functions
+        function defang() {
+            const input = document.getElementById('fangInput').value;
+            let output = input
+                // Replace http with hxxp
+                .replace(/http/gi, 'hxxp')
+                // Replace dots in URLs/IPs with [.]
+                .replace(/\./g, '[.]')
+                // Replace @ in URLs with [@]
+                .replace(/@/g, '[@]')
+                // Replace : with [:]
+                .replace(/:/g, '[:]');
+            
+            document.getElementById('fangOutput').value = output;
+        }
+
+        function refang() {
+            const input = document.getElementById('fangInput').value;
+            let output = input
+                // Replace hxxp with http
+                .replace(/hxxp/gi, 'http')
+                // Remove brackets around dots
+                .replace(/\[\.\]/g, '.')
+                // Remove brackets around @
+                .replace(/\[@\]/g, '@')
+                // Remove brackets around colons
+                .replace(/\[:\]/g, ':');
+            
+            document.getElementById('fangOutput').value = output;
+        }
+
+        function copyText(elementId) {
+            const element = document.getElementById(elementId);
+            element.select();
+            document.execCommand('copy');
+            
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = 'Copied!';
+            setTimeout(() => {
+                button.textContent = originalText;
+            }, 1000);
+        }
+
+        function openVirusTotal() {
+            const input = document.getElementById("threatInput").value;
+            const items = input.split(/\r?\n/).filter((item) => item.trim());
+
+            if (items.length === 0) {
+                alert("Please enter at least one IP or domain.");
+                return;
+            }
+
+            const url = `https://www.virustotal.com/gui/search/${encodeURIComponent(items[0])}`;
+            window.open(url, "_blank");
+        }
+
+        function openAbuseIPDB() {
+            const input = document.getElementById("threatInput").value;
+            const items = input.split(/\r?\n/).filter((item) => item.trim());
+
+            if (items.length === 0) {
+                alert("Please enter at least one IP or domain.");
+                return;
+            }
+
+            const url = `https://www.abuseipdb.com/check/${encodeURIComponent(items[0])}`;
+            window.open(url, "_blank");
+        }
+
+        function searchThreatIntel() {
+            const input = document.getElementById('threatInput').value;
+            const items = input.split(/\r?\n/).filter(item => item.trim());
+            let output = '';
+
+            items.forEach(item => {
+                const trimmedItem = item.trim();
+                if (trimmedItem) {
+                    output += `https://www.virustotal.com/gui/search/${encodeURIComponent(trimmedItem)}\n`;
+                    output += `https://www.abuseipdb.com/check/${encodeURIComponent(trimmedItem)}\n\n`;
+                }
+            });
+
+            document.getElementById('threatOutput').value = output.trim();
+        }
+
+        function decodeSafelinks() {
+            const input = document.getElementById("safelinkInput").value;
+            let decodedOutput = [];
+
+            // Split input by new lines or commas, trim any leading/trailing spaces
+            const safelinks = input.split(/[\n,]+/).map(item => item.trim()).filter(item => item.length > 0);
+
+            if (safelinks.length === 0) {
+                decodedOutput = ["Error: No Safelinks to decode."];
+            } else {
+                safelinks.forEach(safelink => {
+                    // Regular expression to extract the 'url' parameter from the Safelink
+                    const safelinkRegex = /url=([^&]+)/i;
+                    const match = safelinkRegex.exec(safelink);
+
+                    if (match && match[1]) {
+                        let encodedUrl = match[1];
+                        let decodedUrl = encodedUrl;
+
+                        // First, attempt to decode the URL-encoded string (e.g., '%20' -> space)
+                        try {
+                            decodedUrl = decodeURIComponent(encodedUrl);
+
+                            // If the URL looks like it starts with 'http', it's decoded
+                            if (decodedUrl && decodedUrl.indexOf('http') === 0) {
+                                decodedOutput.push(decodedUrl);
+                            } else {
+                                // Otherwise, fallback to base64 decoding (if needed)
+                                try {
+                                    decodedUrl = atob(encodedUrl); // Decode base64
+                                    decodedUrl = decodeURIComponent(decodedUrl); // Decode any further URL encoding if present
+                                    decodedOutput.push(decodedUrl);
+                                } catch (e) {
+                                    decodedOutput.push("Error: Unable to decode Safelink URL.");
+                                }
+                            }
+                        } catch (e) {
+                            decodedOutput.push("Error: Unable to decode URL-encoded string.");
+                        }
+                    } else {
+                        decodedOutput.push("Error: No 'url' parameter found in the Safelink.");
+                    }
+                });
+            }
+
+            // Get the format of the input: check if it's separated by commas or new lines
+            const delimiter = input.includes(',') ? ',' : '\n';
+
+            // If delimiter is comma, add a space after each comma in the output
+            if (delimiter === ',') {
+                document.getElementById("safelinkOutput").value = decodedOutput.join(', ');
+            } else {
+                document.getElementById("safelinkOutput").value = decodedOutput.join('\n');
+            }
+        }
+
+        //QR Decode from File
+        async function decodeQRFromFile() {
+            const fileInput = document.getElementById('qrFileInput');
+            const output = document.getElementById('qrDecodedOutput');
+
+            if (fileInput.files.length === 0) {
+                alert("Please select an image file.");
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const img = new Image();
+            img.src = URL.createObjectURL(file);
+
+            img.onload = () => processQRImage(img, output);
+        }
+
+        //QR Decode from URL
+        async function decodeQRFromUrl() {
+            const imageUrl = document.getElementById('qrImageUrl').value.trim();
+            const output = document.getElementById('qrDecodedOutput');
+
+            if (!imageUrl) {
+                alert("Please enter a valid image URL.");
+                return;
+            }
+
+            const img = new Image();
+            img.crossOrigin = "Anonymous"; // Ensure CORS handling for external images
+            img.src = imageUrl;
+
+            img.onload = () => processQRImage(img, output);
+        }
+
+        function processQRImage(img, outputElement) {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+
+            canvas.width = img.width;
+            canvas.height = img.height;
+            context.drawImage(img, 0, 0, img.width, img.height);
+
+            const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            const qrCode = jsQR(imageData.data, canvas.width, canvas.height);
+
+            if (qrCode) {
+                outputElement.value = qrCode.data;
+            } else {
+                outputElement.value = "No QR code detected.";
+            }
+        }
+        
+        function resetQRDecoder() {
+            document.getElementById('qrFileInput').value = ""; // Clear the file input
+            document.getElementById('qrImageUrl').value = "";  // Clear the URL input
+            document.getElementById('qrDecodedOutput').value = ""; // Clear the decoded output
+        }
+
+        // WHOIS
+        function openWhois() {
+            const input = document.getElementById("whoisInput").value;
+            const url = `https://www.whois.com/whois/${encodeURIComponent(input)}`;
+            window.open(url, "_blank");
+        }
+
+        function generateWhoisURL() {
+            const input = document.getElementById('whoisInput').value;
+            const items = input.split(/\r?\n/).filter(item => item.trim());
+            let output = '';
+            output += `https://www.whois.com/whois/${encodeURIComponent(input)}\n`;
+
+
+            document.getElementById('whoisOutput').value = output.trim();
+        }
+    </script>
 </body>
 </html>
