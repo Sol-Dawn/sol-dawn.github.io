@@ -605,7 +605,7 @@
                 return;
             }
 
-            const url = `https://www.hybrid-analysis.com/search?query={encodeURIComponent(items[0])}`;
+            const url = `https://www.hybrid-analysis.com/search?query=${encodeURIComponent(items[0])}`;
             window.open(url, "_blank");
         }		
 		
