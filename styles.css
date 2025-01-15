@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Love+Light&display=swap');
+
 body {
     background-color: black; /* Entire page background is now black */
     color: #cc5500; /* Burnt orange color for text */
@@ -7,6 +9,21 @@ body {
     padding: 0;
     height: 100vh; /* Ensures body spans the full viewport height */
 }
+
+/* Navigation link styling */
+
+nav ul li a {
+    font-family: 'Love Light', cursive; /* Apply Love Light font */
+    font-size: 1.5rem; /* Adjust size as needed */
+    color: orange; /* Optional: Customize link color */
+    text-decoration: none; /* Remove underline */
+}
+
+nav ul li a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
+
+/* Other styles */
 h1 {
     font-size: 3rem;
     margin: 20px;
