@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Love+Light&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400&display=swap'); /* Orbitron font */
 
 body {
     background-color: black; /* Entire page background is now black */
@@ -10,11 +11,11 @@ body {
     height: 100vh; /* Ensures body spans the full viewport height */
 }
 
-/* Styling for "Arcane Kit" */
-#arcane-kit {
-    color: #0944d9; /* Bright blue for Arcane Kit */
+/* Styling for "Welcome!" */
+#welcome-text {
+    color: #0944d9; /* Bright blue for Welcome */
     font-size: 3.5rem; /* Slightly larger font size */
-    font-family: 'Love Light', cursive; /* Apply Love Light font */
+    font-family: 'Orbitron', sans-serif; /* Apply Orbitron font */
     margin-top: 20px;
 }
 
