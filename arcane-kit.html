@@ -327,7 +327,7 @@
             <div class="tool-content">
                 <textarea id="threatInput" placeholder="Enter IP(s) or domain(s) (one per line)"></textarea>
                 <div class="button-group">
-                    <button onclick="searchThreatIntel()">Generate URLs</button>
+                    <button onclick="searchIPLookup()">Generate URLs</button>
                     <button onclick="openVirusTotal()">Open VT</button>
                     <button onclick="openAbuseIPDB()">Open AbuseIPDB</button>
                     <button class="copy-btn" onclick="copyText('threatOutput')">Copy Result</button>
@@ -336,7 +336,7 @@
             </div>
         </div>
 		
-        <!-- VirusTotal and Any.Run Search Tool -->
+        <!-- VirusTotal and Hybrid-Analysis Search Tool -->
         <div class="tool-card">
             <div class="tool-header">
                 <div>
@@ -349,7 +349,7 @@
             <div class="tool-content">
                 <textarea id="threatInput" placeholder="hashes (one per line)"></textarea>
                 <div class="button-group">
-                    <button onclick="searchThreatIntel()">Generate URLs</button>
+                    <button onclick="searchHashLookup()">Generate URLs</button>
                     <button onclick="openVirusTotal()">Open VT</button>
 					<button onclick="openHybrid()">Open Hybrid-Analysis</button>
                     <button class="copy-btn" onclick="copyText('threatOutput')">Copy Result</button>
@@ -606,8 +606,8 @@
             const url = `https://www.abuseipdb.com/check/${encodeURIComponent(items[0])}`;
             window.open(url, "_blank");
         }
-
-        function searchThreatIntel() {
+//IP Generate URLs
+        function searchIPLookup() {
             const input = document.getElementById('threatInput').value;
             const items = input.split(/\r?\n/).filter(item => item.trim());
             let output = '';
@@ -622,7 +622,22 @@
 
             document.getElementById('threatOutput').value = output.trim();
         }
+//Hash GenerateURl		
+        function searchHashLookup() {
+            const input = document.getElementById('threatInput').value;
+            const items = input.split(/\r?\n/).filter(item => item.trim());
+            let output = '';
 
+            items.forEach(item => {
+                const trimmedItem = item.trim();
+                if (trimmedItem) {
+                    output += `https://www.virustotal.com/gui/search/${encodeURIComponent(trimmedItem)}\n`;
+                    output += `https://www.hybrid-analysis.com/search?query={encodeURIComponent(trimmedItem)}\n\n`;
+                }
+            });
+
+            document.getElementById('threatOutput').value = output.trim();
+        }
         function decodeSafelinks() {
             const input = document.getElementById("safelinkInput").value;
             let decodedOutput = [];
