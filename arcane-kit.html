@@ -347,14 +347,14 @@
                 <span class="expand-icon">▼</span>
             </div>
             <div class="tool-content">
-                <textarea id="threatInput" placeholder="hashes (one per line)"></textarea>
+                <textarea id="hashInput" placeholder="hashes (one per line)"></textarea>
                 <div class="button-group">
                     <button onclick="searchHashLookup()">Generate URLs</button>
-                    <button onclick="openVirusTotal()">Open VT</button>
+                    <button onclick="openVirusTotal2()">Open VT</button>
 					<button onclick="openHybrid()">Open Hybrid-Analysis</button>
-                    <button class="copy-btn" onclick="copyText('threatOutput')">Copy Result</button>
+                    <button class="copy-btn" onclick="copyText('hashOutput')">Copy Result</button>
                 </div>
-                <textarea id="threatOutput" readonly placeholder="Generated search URL(s) will appear here"></textarea>
+                <textarea id="hashOutput" readonly placeholder="Generated search URL(s) will appear here"></textarea>
             </div>
         </div>		
 
@@ -580,9 +580,24 @@
             const url = `https://www.virustotal.com/gui/search/${encodeURIComponent(items[0])}`;
             window.open(url, "_blank");
         }
+		
+// VirusTotal Hash Function
+        function openVirusTotal2() {
+            const input = document.getElementById("hashInput").value;
+            const items = input.split(/\r?\n/).filter((item) => item.trim());
+
+            if (items.length === 0) {
+                alert("Please enter at least one hash.");
+                return;
+            }
+
+            const url = `https://www.virustotal.com/gui/search/${encodeURIComponent(items[0])}`;
+            window.open(url, "_blank");
+        }	
+		
 // Hybrid-Analysis Function
         function openHybrid() {
-            const input = document.getElementById("threatInput").value;
+            const input = document.getElementById("hashInput").value;
             const items = input.split(/\r?\n/).filter((item) => item.trim());
 
             if (items.length === 0) {
@@ -593,6 +608,7 @@
             const url = `https://www.hybrid-analysis.com/search?query={encodeURIComponent(items[0])}`;
             window.open(url, "_blank");
         }		
+		
 // AbuseIPDB function
         function openAbuseIPDB() {
             const input = document.getElementById("threatInput").value;
@@ -606,6 +622,7 @@
             const url = `https://www.abuseipdb.com/check/${encodeURIComponent(items[0])}`;
             window.open(url, "_blank");
         }
+		
 //IP Generate URLs
         function searchIPLookup() {
             const input = document.getElementById('threatInput').value;
@@ -622,9 +639,9 @@
 
             document.getElementById('threatOutput').value = output.trim();
         }
-//Hash GenerateURl		
+// Hash GenerateURl		
         function searchHashLookup() {
-            const input = document.getElementById('threatInput').value;
+            const input = document.getElementById('hashInput').value;
             const items = input.split(/\r?\n/).filter(item => item.trim());
             let output = '';
 
@@ -636,8 +653,10 @@
                 }
             });
 
-            document.getElementById('threatOutput').value = output.trim();
+            document.getElementById('hashOutput').value = output.trim();
         }
+		
+// decode Safelink
         function decodeSafelinks() {
             const input = document.getElementById("safelinkInput").value;
             let decodedOutput = [];
