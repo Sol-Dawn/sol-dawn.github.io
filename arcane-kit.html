@@ -336,7 +336,7 @@
             </div>
         </div>
 		
-        <!-- VirusTotal and Hybrid-Analysis Search Tool -->
+        <!-- Hash Search Tool -->
         <div class="tool-card">
             <div class="tool-header">
                 <div>
@@ -352,6 +352,7 @@
                     <button onclick="searchHashLookup()">Generate URLs</button>
                     <button onclick="openVirusTotal2()">Open VT</button>
 					<button onclick="openHybrid()">Open Hybrid-Analysis</button>
+					<button onclick="openJoe()">Open Joe Sandbox</button>
                     <button class="copy-btn" onclick="copyText('hashOutput')">Copy Result</button>
                 </div>
                 <textarea id="hashOutput" readonly placeholder="Generated search URL(s) will appear here"></textarea>
@@ -581,34 +582,6 @@
             window.open(url, "_blank");
         }
 		
-// VirusTotal Hash Function
-        function openVirusTotal2() {
-            const input = document.getElementById("hashInput").value;
-            const items = input.split(/\r?\n/).filter((item) => item.trim());
-
-            if (items.length === 0) {
-                alert("Please enter at least one hash.");
-                return;
-            }
-
-            const url = `https://www.virustotal.com/gui/search/${encodeURIComponent(items[0])}`;
-            window.open(url, "_blank");
-        }	
-		
-// Hybrid-Analysis Function
-        function openHybrid() {
-            const input = document.getElementById("hashInput").value;
-            const items = input.split(/\r?\n/).filter((item) => item.trim());
-
-            if (items.length === 0) {
-                alert("Please enter at least one hash.");
-                return;
-            }
-
-            const url = `https://www.hybrid-analysis.com/search?query=${encodeURIComponent(items[0])}`;
-            window.open(url, "_blank");
-        }		
-		
 // AbuseIPDB function
         function openAbuseIPDB() {
             const input = document.getElementById("threatInput").value;
@@ -639,6 +612,49 @@
 
             document.getElementById('threatOutput').value = output.trim();
         }
+		
+// VirusTotal Hash Function
+        function openVirusTotal2() {
+            const input = document.getElementById("hashInput").value;
+            const items = input.split(/\r?\n/).filter((item) => item.trim());
+
+            if (items.length === 0) {
+                alert("Please enter at least one hash.");
+                return;
+            }
+
+            const url = `https://www.virustotal.com/gui/search/${encodeURIComponent(items[0])}`;
+            window.open(url, "_blank");
+        }	
+		
+// Hybrid-Analysis Function
+        function openHybrid() {
+            const input = document.getElementById("hashInput").value;
+            const items = input.split(/\r?\n/).filter((item) => item.trim());
+
+            if (items.length === 0) {
+                alert("Please enter at least one hash.");
+                return;
+            }
+
+            const url = `https://www.hybrid-analysis.com/search?query=${encodeURIComponent(items[0])}`;
+            window.open(url, "_blank");
+        }		
+
+// Joe-Sandbox Function
+        function openJoe() {
+            const input = document.getElementById("hashInput").value;
+            const items = input.split(/\r?\n/).filter((item) => item.trim());
+
+            if (items.length === 0) {
+                alert("Please enter at least one hash.");
+                return;
+            }
+
+            const url = `https://www.joesandbox.com/analysis/search?q=${encodeURIComponent(items[0])}`;
+            window.open(url, "_blank");
+        }
+		
 // Hash GenerateURl		
         function searchHashLookup() {
             const input = document.getElementById('hashInput').value;
@@ -650,6 +666,7 @@
                 if (trimmedItem) {
                     output += `https://www.virustotal.com/gui/search/${encodeURIComponent(trimmedItem)}\n`;
                     output += `https://www.hybrid-analysis.com/search?query=${encodeURIComponent(trimmedItem)}\n\n`;
+					output += `https://www.joesandbox.com/analysis/search?q=${encodeURIComponent(trimmedItem)}\n\n`;
                 }
             });
 
