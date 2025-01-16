@@ -664,7 +664,7 @@
             items.forEach(item => {
                 const trimmedItem = item.trim();
                 if (trimmedItem) {
-                    output += `https://www.virustotal.com/gui/search/${encodeURIComponent(trimmedItem)}\n`;
+                    output += `https://www.virustotal.com/gui/search/${encodeURIComponent(trimmedItem)}\n\n`;
                     output += `https://www.hybrid-analysis.com/search?query=${encodeURIComponent(trimmedItem)}\n\n`;
 					output += `https://www.joesandbox.com/analysis/search?q=${encodeURIComponent(trimmedItem)}\n\n`;
                 }
