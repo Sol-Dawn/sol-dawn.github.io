@@ -314,7 +314,7 @@
             </div>
         </div>
 
-        <!-- VirusTotal and AbuseIPDB Search Tool -->
+        <!-- IP Search -->
         <div class="tool-card">
             <div class="tool-header">
                 <div>
@@ -330,6 +330,7 @@
                     <button onclick="searchIPLookup()">Generate URLs</button>
                     <button onclick="openVirusTotal()">Open VT</button>
                     <button onclick="openAbuseIPDB()">Open AbuseIPDB</button>
+					<button onclick="openIPQS()">Open AbuseIPDB</button>
                     <button class="copy-btn" onclick="copyText('threatOutput')">Copy Result</button>
                 </div>
                 <textarea id="threatOutput" readonly placeholder="Generated search URL(s) will appear here"></textarea>
@@ -596,6 +597,20 @@
             window.open(url, "_blank");
         }
 		
+// IPQS
+        function openIPQS() {
+            const input = document.getElementById("threatInput").value;
+            const items = input.split(/\r?\n/).filter((item) => item.trim());
+
+            if (items.length === 0) {
+                alert("Please enter at least one IP or domain.");
+                return;
+            }
+
+            const url = `https://www.ipqualityscore.com/free-ip-lookup-proxy-vpn-test/lookup/${encodeURIComponent(items[0])}`;
+            window.open(url, "_blank");
+        }
+		
 //IP Generate URLs
         function searchIPLookup() {
             const input = document.getElementById('threatInput').value;
@@ -605,8 +620,9 @@
             items.forEach(item => {
                 const trimmedItem = item.trim();
                 if (trimmedItem) {
-                    output += `https://www.virustotal.com/gui/search/${encodeURIComponent(trimmedItem)}\n`;
+                    output += `https://www.virustotal.com/gui/search/${encodeURIComponent(trimmedItem)}\n\n`;
                     output += `https://www.abuseipdb.com/check/${encodeURIComponent(trimmedItem)}\n\n`;
+					output += `https://www.ipqualityscore.com/free-ip-lookup-proxy-vpn-test/lookup/${encodeURIComponent(trimmedItem)}\n\n`;
                 }
             });
 
