@@ -435,7 +435,27 @@
                 <textarea id="whoisOutput" readonly placeholder="Generated whois URL will appear here"></textarea>
             </div>
         </div>
+		
+		<!-- Base64 Decoder Tool -->
+	<div class="tool-card">
+		<div class="tool-header">
+			<div>
+            <h3>Base64 Decoder</h3>
+            <p class="tool-description">Enter a Base64-encoded string and decode it into plain text.</p>
+        </div>
+        <span class="expand-icon">▼</span>
     </div>
+    <div class="tool-content">
+        <textarea id="base64Input" placeholder="Enter Base64-encoded string here"></textarea>
+        <div class="button-group">
+            <button onclick="decodeBase64()">Decode</button>
+            <button class="copy-btn" onclick="copyText('base64Output')">Copy Result</button>
+        </div>
+        <textarea id="base64Output" readonly placeholder="Decoded result will appear here"></textarea>
+    </div>
+	</div>
+	
+ </div>
     
     <footer style="margin-top: 40px; text-align: center; font-size: 14px; color: #666;">
         <p>Created with love by ChatGPT and I.</p>
@@ -821,6 +841,33 @@
             document.getElementById('whoisOutput').value = output.trim();
         }
     </script>
+	<script>
+    // Decode Base64 Input
+    function decodeBase64() {
+        const input = document.getElementById('base64Input').value.trim();
+        try {
+            const decoded = atob(input); // Decode Base64
+            document.getElementById('base64Output').value = decoded;
+        } catch (error) {
+            document.getElementById('base64Output').value = 'Invalid Base64 input';
+        }
+    }
+
+    // Copy Text to Clipboard
+    function copyText(elementId) {
+        const element = document.getElementById(elementId);
+        element.select();
+        document.execCommand('copy');
+
+        // Optional: Change button text temporarily to "Copied!"
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = 'Copied!';
+        setTimeout(() => {
+            button.textContent = originalText;
+			}, 1000);
+	}
+	</script>
 
 </body>
 </html>
