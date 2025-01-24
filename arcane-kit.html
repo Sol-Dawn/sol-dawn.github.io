@@ -455,6 +455,44 @@
     </div>
 	</div>
 	
+		<!-- Remote Shell File Finder -->
+	<div class="tool-card">
+		<div class="tool-header">
+			<div>
+            <h3>Remote Shell File Finder</h3>
+            <p class="tool-description">Enter the details below to generate a command for locating files or directories. <b>Note:</b> Only input one filter at a time.</p>
+			</div>
+        <span class="expand-icon">▼</span>
+		</div>
+    <div class="tool-content">
+        <label for="fileFinderPath" style="font-weight: bold;">Path:</label>
+        <input type="text" id="fileFinderPath" placeholder="Enter path (e.g., c:\, d:\, /)" />
+
+        <div style="margin-top: 10px;">
+            <label style="font-weight: bold;">Type:</label>
+            <input type="checkbox" id="fileOption" /> File
+            <input type="checkbox" id="directoryOption" /> Directory
+        </div>
+
+        <div style="margin-top: 10px;">
+            <label style="font-weight: bold;">OS:</label>
+            <input type="checkbox" id="windowsOption" /> Windows
+            <input type="checkbox" id="nixOption" /> *nix
+        </div>
+
+        <label for="fileFinderFilter" style="font-weight: bold; margin-top: 10px; display: block;">Filter:</label>
+        <input type="text" id="fileFinderFilter" placeholder="Enter file or directory name" />
+
+        <div class="button-group" style="margin-top: 15px;">
+            <button onclick="generateFileFinderCommand()">Generate Command</button>
+            <button class="copy-btn" onclick="copyText('fileFinderOutput')">Copy Result</button>
+        </div>
+
+        <textarea id="fileFinderOutput" readonly placeholder="Generated command will appear here"></textarea>
+    </div>
+</div>
+
+	
  </div>
     
     <footer style="margin-top: 40px; text-align: center; font-size: 14px; color: #666;">
@@ -868,6 +906,68 @@
 			}, 1000);
 	}
 	</script>
+
+<script>
+    function generateFileFinderCommand() {
+        const path = document.getElementById('fileFinderPath').value.trim();
+        const filter = document.getElementById('fileFinderFilter').value.trim();
+        const isFile = document.getElementById('fileOption').checked;
+        const isDirectory = document.getElementById('directoryOption').checked;
+        const isWindows = document.getElementById('windowsOption').checked;
+        const isNix = document.getElementById('nixOption').checked;
+
+        // Validate input
+        if (!path) {
+            document.getElementById('fileFinderOutput').value = 'Error: Please specify a path.';
+            return;
+        }
+        if (!filter) {
+            document.getElementById('fileFinderOutput').value = 'Error: Please specify a filter.';
+            return;
+        }
+        if (!isFile && !isDirectory) {
+            document.getElementById('fileFinderOutput').value = 'Error: Please select File or Directory.';
+            return;
+        }
+        if (!isWindows && !isNix) {
+            document.getElementById('fileFinderOutput').value = 'Error: Please select an OS.';
+            return;
+        }
+
+        let command = '';
+        const filterWithWildcards = `*${filter}*`;
+
+        // Generate Windows command
+        if (isWindows) {
+            command = `Get-ChildItem -Path "${path}" ${isFile ? '-File' : ''} ${isDirectory ? '-Directory' : ''} -Force -Recurse -Filter "${filterWithWildcards}" -ErrorAction SilentlyContinue`;
+        }
+        // Generate *nix command
+        else if (isNix) {
+            const type = isFile ? 'f' : 'd'; // `f` for file, `d` for directory
+            command = `find ${path} -type ${type} -name "${filterWithWildcards}"`;
+        }
+
+        // Display the generated command
+        document.getElementById('fileFinderOutput').value = command;
+    }
+
+    // Function to copy text to clipboard
+    function copyText(elementId) {
+        const element = document.getElementById(elementId);
+        element.select();
+        document.execCommand('copy');
+
+        // Optional: Change button text temporarily to "Copied!"
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = 'Copied!';
+        setTimeout(() => {
+            button.textContent = originalText;
+        }, 1000);
+    }
+</script>
+
+
 
 </body>
 </html>
