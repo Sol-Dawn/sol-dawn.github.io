@@ -967,6 +967,25 @@
     }
 </script>
 
+<script>
+    // Handle OS selection behavior
+    document.getElementById('windowsOption').addEventListener('change', function () {
+        document.getElementById('nixOption').disabled = this.checked; // Disable *nix if Windows is checked
+    });
+
+    document.getElementById('nixOption').addEventListener('change', function () {
+        document.getElementById('windowsOption').disabled = this.checked; // Disable Windows if *nix is checked
+    });
+
+    // Handle File/Directory selection behavior
+    document.getElementById('fileOption').addEventListener('change', function () {
+        document.getElementById('directoryOption').disabled = this.checked; // Disable Directory if File is checked
+    });
+
+    document.getElementById('directoryOption').addEventListener('change', function () {
+        document.getElementById('fileOption').disabled = this.checked; // Disable File if Directory is checked
+    });
+</script>
 
 
 </body>
