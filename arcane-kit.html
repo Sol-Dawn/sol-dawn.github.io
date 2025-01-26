@@ -245,31 +245,36 @@
             <li><a href="index.html" style="text-decoration: none; color: var(--text-color); font-size: 1.2rem;">Home</a></li>
         </ul>
     </nav>
-    <div class="toggle-container">
-        <span class="toggle-label">Collapse All</span>
-        <label class="switch">
-            <input type="checkbox" id="toggleAll" checked>
-            <span class="slider"></span>
-        </label>
-        <span class="toggle-label">Expand All</span>
+    <div class="toggle-container" style="display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <span class="toggle-label">Collapse All</span>
+            <label class="switch">
+                <input type="checkbox" id="toggleAll" checked>
+                <span class="slider"></span>
+            </label>
+            <span class="toggle-label">Expand All</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 15px;">
+            <svg class="feather feather-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+                <g>
+                    <path d="M30.63,16.77..."></path>
+                </g>
+                <g>
+                    <path d="M23,16c0,3.86-3.14..."></path>
+                </g>
+            </svg>
+            <label class="switch">
+                <input type="checkbox" id="darkModeToggle">
+                <span class="slider"></span>
+            </label>
+            <svg class="feather feather-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <button onclick="clearAllCards()" style="padding: 8px 16px; border: none; background-color: #007bff; color: white; border-radius: 4px; cursor: pointer;">Clear All</button>
+        </div>
     </div>
-    <div class="toggle-container">
-        <svg class="feather feather-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-            <g>
-                <path d="M30.63,16.77..."></path>
-            </g>
-            <g>
-                <path d="M23,16c0,3.86-3.14..."></path>
-            </g>
-        </svg>
-        <label class="switch">
-            <input type="checkbox" id="darkModeToggle">
-            <span class="slider"></span>
-        </label>
-        <svg class="feather feather-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-    </div>
+	</div>
+	
 </div>
 
     <!-- Tool Container -->
