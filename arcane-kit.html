@@ -992,6 +992,24 @@
     });
 </script>
 
+<script>
+    function clearAllCards() {
+        // Clear all text inputs and outputs
+        const textInputs = document.querySelectorAll('input[type="text"], textarea');
+        textInputs.forEach(input => input.value = '');
+
+        // Uncheck all checkboxes
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = false;
+            checkbox.disabled = false; // Ensure previously disabled checkboxes are re-enabled
+        });
+
+        // Optionally, provide user feedback
+        alert('All inputs and outputs have been cleared!');
+    }
+</script>
+
 
 </body>
 </html>
